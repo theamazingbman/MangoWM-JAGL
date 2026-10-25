@@ -7,7 +7,6 @@ swaync -c ~/.config/sway/swaync/config.json -s ~/.config/sway/swaync/style.css &
 
 ## Status bar
 pkill -x waybar
-waybar -c ~/.config/sway/waybar/config-glyphs -s ~/.config/sway/waybar/style-glyphs.css &
 
 ## System tray / polkit
 lxpolkit &
