@@ -64,13 +64,13 @@ input type:pointer {
 font pango:Lilex Nerd Font Mono 11
 
 # Colors (theme-swappable via current-theme symlink)
-include $config_dir/current-theme/colors.conf
+#include $config_dir/current-theme/colors.conf
 
 # class                 border   backgr  text    indicator child_border
-client.focused          $barbie  $cyan   $gray   $blue     $barbie
-client.focused_inactive $gray    $bg     $fg     $bg       $gray
-client.unfocused        $gray    $bg     $fg     $bg       $gray
-client.urgent           $blue    $blue   $bg     $blue     $blue
+#client.focused          $barbie  $cyan   $gray   $blue     $barbie
+#client.focused_inactive $gray    $bg     $fg     $bg       $gray
+#client.unfocused        $gray    $bg     $fg     $bg       $gray
+#client.urgent           $blue    $blue   $bg     $blue     $blue
 
 ### Includes
 include $config_dir/workspaces.conf
