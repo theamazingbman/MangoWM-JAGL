@@ -123,7 +123,7 @@ PACKAGES_AUDIO=(
 PACKAGES_UTILITIES=(
     avahi acpi acpid upower power-profiles-daemon
     fd-find xdg-user-dirs-gtk
-    kanshi eog nwg-displays
+    kanshi eog
     gawk
     libnotify libnotify-devel libusb btop
 )
@@ -161,7 +161,8 @@ if [ "$ONLY_CONFIG" = false ]; then
     sudo dnf install -y "${PACKAGES_BUILD[@]}" || die "Failed to install build tools"
 
     msg "Installing system utilities..."
-    sudo dnf install -y "${PACKAGES_UTILITIES[@]}" || die "Failed to install utilities"
+    # Added --allowerasing to cleanly substitute tuned-ppd for power-profiles-daemon
+    sudo dnf install -y --allowerasing "${PACKAGES_UTILITIES[@]}" || die "Failed to install utilities"
 
     msg "Installing default browser..."
     sudo dnf install -y firefox || msg "Note: firefox package execution skipped..."
@@ -187,9 +188,9 @@ if [ "$ONLY_CONFIG" = false ]; then
     # Enable Copr for nwg-look and compile desktop custom styling assets
     mkdir -p "$TEMP_DIR/themes"
     
-    msg "Enabling ocsw/sway-extras Copr repository for nwg-look..."
+    msg "Enabling ocsw/sway-extras Copr repository for nwg tools..."
     sudo dnf copr enable -y ocsw/sway-extras
-    sudo dnf install -y nwg-look
+    sudo dnf install -y nwg-look nwg-displays
 
     msg "Installing Orchis GTK Theme natively..."
     cd "$TEMP_DIR/themes"
