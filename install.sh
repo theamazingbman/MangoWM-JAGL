@@ -80,8 +80,8 @@ if [ "$ONLY_CONFIG" = false ]; then
     msg "Installing RPM Fusion (Free and Non-Free)..."
     if ! rpm -q rpmfusion-free-release >/dev/null 2>&1; then
         sudo dnf install -y \
-            https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-            https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+            https://rpmfusion.org(rpm -E %fedora).noarch.rpm \
+            https://rpmfusion.org(rpm -E %fedora).noarch.rpm
     else
         echo "RPM Fusion is already installed."
     fi
@@ -172,7 +172,7 @@ if [ "$ONLY_CONFIG" = false ]; then
     # 4. Swap to Full Multimedia Codecs (RPM Fusion)
     msg "Configuring Full Multimedia Codecs..."
     sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
-    sudo dnf install -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+    sudo dnf install -y @multimedia --install-weak-deps=false --exclude=PackageKit-gstreamer-plugin
     sudo dnf install -y gstreamer1-plugins-ugly gstreamer1-libav --allowerasing
 
     # Enable Fedora services
@@ -260,48 +260,43 @@ if [ -L ~/.config/gtklock ] && [ "$(readlink ~/.config/gtklock)" = ~/.config/swa
     rm ~/.config/gtklock
 fi
 
-   msg "Downloading wallpaper directory..."
-    if [ ! -d "$CONFIG_DIR/wallpaper" ]; then
-        git clone --depth 1 --progress https://github.com/theamazingbman/wallpapers.git "$CONFIG_DIR/wallpaper" || die "Failed to clone wallpapers"
-        rm -rf "$CONFIG_DIR/wallpaper/.git"
-    else
-        msg "Wallpaper directory already exists, skipping..."
+msg "Downloading wallpaper directory..."
+if [ ! -d "$CONFIG_DIR/wallpaper" ]; then
+    # Setup default theme references
+    ln -sfn themes/github_dark "$CONFIG_DIR/current-theme"
+
+    # Setup default user structures
+    xdg-user-dirs-update
+    mkdir -p ~/Screenshots
+
+    if [ -f "$SCRIPT_DIR/QUICKSTART.md" ]; then
+        cp "$SCRIPT_DIR/QUICKSTART.md" "$HOME/QUICKSTART-sway.md"
     fi
 
-# Set default theme references
-ln -sfn themes/github_dark "$CONFIG_DIR/current-theme"
+    if [ -f "$SCRIPT_DIR/nvidia-setup.sh" ]; then
+        cp "$SCRIPT_DIR/nvidia-setup.sh" "$HOME/nvidia-setup.sh"
+        chmod +x "$HOME/nvidia-setup.sh"
+    fi
 
-# Setup default user structures
-xdg-user-dirs-update
-mkdir -p ~/Screenshots
+    # 2. Install Brave Browser (Origin) & 5. Flatpak Ecosystem
+    if [ "$ONLY_CONFIG" = false ]; then
+        msg "Installing Brave Browser (Origin Mode)..."
+        curl -fsS https://brave.com | FLAVOR=origin sh
 
-if [ -f "$SCRIPT_DIR/QUICKSTART.md" ]; then
-    cp "$SCRIPT_DIR/QUICKSTART.md" "$HOME/QUICKSTART-sway.md"
-fi
+        msg "Configuring Flathub..."
+        flatpak remote-add --if-not-exists flathub https://flathub.org
+        flatpak update --appstream
 
-if [ -f "$SCRIPT_DIR/nvidia-setup.sh" ]; then
-    cp "$SCRIPT_DIR/nvidia-setup.sh" "$HOME/nvidia-setup.sh"
-    chmod +x "$HOME/nvidia-setup.sh"
-fi
-
-# 2. Install Brave Browser (Origin) & 5. Flatpak Ecosystem
-if [ "$ONLY_CONFIG" = false ]; then
-    msg "Installing Brave Browser (Origin Mode)..."
-    curl -fsS https://dl.brave.com/install.sh | FLAVOR=origin sh
-
-    msg "Configuring Flathub..."
-    flatpak remote-add --if-not-exists flathub https://flathub.org
-    flatpak update --appstream
-
-    if [ -f "flatpak_packages.txt" ]; then
-        msg "Installing Flatpak applications..."
-        while IFS= read -r app || [ -n "$app" ]; do
-            [[ -z "$app" || "$app" =~ ^# ]] && continue
-            echo "Installing Flatpak: $app"
-            flatpak install flathub "$app" -y --noninteractive || echo "Failed to install $app, skipping..."
-        done < flatpak_packages.txt
-    else
-        warn "flatpak_packages.txt not found. Skipping Flatpak app installs."
+        if [ -f "flatpak_packages.txt" ]; then
+            msg "Installing Flatpak applications..."
+            while IFS= read -r app || [ -n "$app" ]; do
+                [[ -z "$app" || "$app" =~ ^# ]] && continue
+                echo "Installing Flatpak: $app"
+                flatpak install flathub "$app" -y --noninteractive || echo "Failed to install $app, skipping..."
+            done < flatpak_packages.txt
+        else
+            warn "flatpak_packages.txt not found. Skipping Flatpak app installs."
+        fi
     fi
 fi
 
