@@ -30,7 +30,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Paths
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
 CONFIG_DIR="$HOME/.config/sway"
 TEMP_DIR="/tmp/sway_$$"
 LOG_FILE="$HOME/sway-install.log"
@@ -81,8 +81,8 @@ if [ "$ONLY_CONFIG" = false ]; then
     if ! rpm -q rpmfusion-free-release >/dev/null 2>&1; then
         FEDORA_VERSION=$(rpm -E %fedora)
         sudo dnf install -y \
-            "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm" \
-            "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm"
+            "https://rpmfusion.org{FEDORA_VERSION}.noarch.rpm" \
+            "https://rpmfusion.org{FEDORA_VERSION}.noarch.rpm"
     else
         echo "RPM Fusion is already installed."
     fi
@@ -101,7 +101,7 @@ PACKAGES_CORE=(
 )
 
 PACKAGES_SWAY=(
-    wmenu foot swaync autotiling fuzzel
+    wmenu foot swaync fuzzel
     grim slurp wl-clipboard cliphist
     brightnessctl playerctl
     wlr-randr
@@ -175,6 +175,15 @@ if [ "$ONLY_CONFIG" = false ]; then
     sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
     sudo dnf install -y @multimedia --install-weak-deps=false --exclude=PackageKit-gstreamer-plugin
     sudo dnf install -y gstreamer1-plugins-ugly gstreamer1-libav --allowerasing
+
+    # Install Autotiling via Python dependencies natively
+    msg "Installing autotiling layout engine via Python pipeline..."
+    sudo dnf install -y python3-pip python3-i3ipc
+    sudo pip3 install --prefix=/usr autotiling || {
+        warn "Global pip block intercepted. Falling back to local standalone file binary install..."
+        sudo wget -qO /usr/local/bin/autotiling "https://githubusercontent.com"
+        sudo chmod +x /usr/local/bin/autotiling
+    }
 
     # Enable Fedora services
     sudo systemctl enable avahi-daemon acpid
