@@ -51,6 +51,45 @@ warn() { echo -e "${YELLOW}WARNING: $*${NC}" >&2; }
 msg() { echo -e "${CYAN}$*${NC}"; }
 
 
+# Install user fonts for Waybar and terminal applications
+install_user_fonts() {
+    local font_dir="$HOME/.local/share/fonts"
+    local temp_dir
+
+    temp_dir="$(mktemp -d)" || die "Could not create temporary font directory"
+    mkdir -p "$font_dir/JetBrainsMono" "$font_dir/FontAwesome6"
+
+    msg "Downloading JetBrainsMono Nerd Font..."
+    curl -fL --retry 3 \
+        "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip" \
+        -o "$temp_dir/JetBrainsMono.zip" \
+        || { rm -rf "$temp_dir"; die "Failed to download JetBrainsMono Nerd Font"; }
+
+    unzip -oq "$temp_dir/JetBrainsMono.zip" \
+        -d "$font_dir/JetBrainsMono" \
+        || { rm -rf "$temp_dir"; die "Failed to extract JetBrainsMono Nerd Font"; }
+
+    msg "Downloading Font Awesome 6 Free..."
+    curl -fL --retry 3 \
+        "https://github.com/FortAwesome/Font-Awesome/releases/download/6.7.2/fontawesome-free-6.7.2-desktop.zip" \
+        -o "$temp_dir/FontAwesome6.zip" \
+        || { rm -rf "$temp_dir"; die "Failed to download Font Awesome 6 Free"; }
+
+    unzip -oq "$temp_dir/FontAwesome6.zip" -d "$temp_dir/fontawesome"
+    
+    find "$temp_dir/fontawesome" -type f -name '*.otf' \
+        -exec cp -f {} "$font_dir/FontAwesome6/" \; \
+        || { rm -rf "$temp_dir"; die "Failed to install Font Awesome fonts"; }
+
+    rm -rf "$temp_dir"
+
+    msg "Refreshing user font cache..."
+    fc-cache -f "$font_dir" \
+        || die "Failed to refresh font cache"
+
+    msg "JetBrainsMono Nerd Font and Font Awesome 6 Free installed."
+}
+
 # System validation for Fedora
 if [ "$ONLY_CONFIG" = false ]; then
     . /etc/os-release 2>/dev/null || die "Cannot read /etc/os-release to verify OS"
@@ -64,9 +103,9 @@ fi
 clear
 echo -e "${CYAN}"
 echo " +-+-+-+-+-+-+-+-+-+-+-+-+ "
-echo " |S|w|a|y| |S|e|t|u|p|    | "
+echo " |  TERRY'S SWAY SETUP   | "
 echo " +-+-+-+-+-+-+-+-+-+-+-+-+ "
-echo " |W|a|y|l|a|n|d| |W|M|    | "
+echo " |      WAYLAND MW       | "
 echo " +-+-+-+-+-+-+-+-+-+-+-+-+ "
 echo -e "${NC}\n"
 
@@ -168,6 +207,7 @@ if [ "$ONLY_CONFIG" = false ]; then
 
     msg "Installing fonts..."
     sudo dnf install -y "${PACKAGES_FONTS[@]}" || die "Failed to install fonts"
+    install_user_fonts
 
     # 4. Swap to Full Multimedia Codecs (RPM Fusion)
     msg "Configuring Full Multimedia Codecs..."
