@@ -189,28 +189,6 @@ if [ "$ONLY_CONFIG" = false ]; then
     sudo dnf copr enable -y tofik/nwg-shell
     sudo dnf install -y nwg-look nwg-displays
 
-    # Enforce safe explicit tracking folder generation path variables
-    THEME_BUILD_DIR="/tmp/sway_themes_$$"
-    mkdir -p "$THEME_BUILD_DIR"
-
-    msg "Installing Orchis GTK Theme natively..."
-    cd "$THEME_BUILD_DIR"
-    git clone --depth 1 https://github.com
-    cd Orchis-theme
-    ./install.sh -t all -s compact --dest "$HOME/.themes" || warn "Orchis theme extraction skipped"
-
-    msg "Installing Colloid Icon Theme natively..."
-    cd "$THEME_BUILD_DIR"
-    git clone --depth 1 https://github.com
-    cd Colloid-icon-theme
-    ./install.sh -t all --dest "$HOME/.icons" || warn "Colloid icon extraction skipped"
-    
-    # Safe storage directory teardown
-    rm -rf "$THEME_BUILD_DIR"
-
-    # Return to script root context
-    cd "$SCRIPT_DIR"
-
     # Enable Fedora services
     sudo systemctl enable avahi-daemon acpid
 else
