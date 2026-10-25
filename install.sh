@@ -120,7 +120,7 @@ if [[ "$ONLY_CONFIG" == false ]]; then
 fi
 
 PACKAGES_CORE=(sway swayidle swaybg waybar xorg-x11-server-Xwayland)
-PACKAGES_SWAY=(wmenu foot geany swaync fuzzel grim slurp wl-clipboard cliphist brightnessctl playerctl wlr-randr xdg-desktop-portal-wlr swappy wtype)
+PACKAGES_SWAY=(wmenu foot geany gimp inkscape swaync fuzzel grim slurp wl-clipboard cliphist brightnessctl playerctl wlr-randr xdg-desktop-portal-wlr swappy wtype)
 PACKAGES_UI=(xsettingsd NetworkManager-tui lxpolkit)
 PACKAGES_FILE_MANAGER=(nautilus gvfs-smb gvfs-mtp dialog mtools unzip)
 PACKAGES_AUDIO=(pavucontrol pamixer pipewire-utils)
