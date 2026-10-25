@@ -3,10 +3,15 @@
 # Autostart applications
 ## Notification daemon
 pkill -x swaync
-swaync -c ~/.config/sway/swaync/config.json -s ~/.config/sway/swaync/style.css &
 
 ## Status bar
-pkill -x waybar
+pkill -x waybar 2>/dev/null || true
+
+sleep 1
+
+waybar \
+    -c "$HOME/.config/sway/waybar/config" \
+    -s "$HOME/.config/sway/waybar/style.css" &
 
 ## System tray / polkit
 lxpolkit &
