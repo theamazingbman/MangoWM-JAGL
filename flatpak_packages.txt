@@ -1,6 +1,4 @@
 com.notesnook.Notesnook
-com.mattjakeman.ExtensionManager
-org.mozilla.thunderbird
 io.gitlab.librewolf-community
 com.stremio.Stremio
 org.gimp.GIMP
