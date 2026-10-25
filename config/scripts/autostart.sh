@@ -2,7 +2,8 @@
 
 # Autostart applications
 ## Notification daemon
-pkill -x swaync
+pkill -x swaync 2>/dev/null || true
+swaync &
 
 ## Status bar
 pkill -x waybar 2>/dev/null || true
