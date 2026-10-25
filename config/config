@@ -16,7 +16,7 @@ set $menu fuzzel
 
 ### Output configuration
 # Simple static wallpaper with swaybg
-output * bg $config_dir/wallpaper/wallhaven-218x7m_3440x1440.png fill
+output * bg /home/terryb/Pictures/Wallpapers/wallhaven-218x7m_3440x1440.png fill
 
 # For multiple monitors:
 # output HDMI-A-1 resolution 1920x1080 position 1920,0
