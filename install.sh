@@ -161,7 +161,6 @@ if [ "$ONLY_CONFIG" = false ]; then
     sudo dnf install -y "${PACKAGES_BUILD[@]}" || die "Failed to install build tools"
 
     msg "Installing system utilities..."
-    # Added --allowerasing to cleanly substitute tuned-ppd for power-profiles-daemon
     sudo dnf install -y --allowerasing "${PACKAGES_UTILITIES[@]}" || die "Failed to install utilities"
 
     msg "Installing default browser..."
@@ -173,7 +172,7 @@ if [ "$ONLY_CONFIG" = false ]; then
     # 4. Swap to Full Multimedia Codecs (RPM Fusion)
     msg "Configuring Full Multimedia Codecs..."
     sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
-    sudo dnf install -y @multimedia --install-weak-deps=false --exclude=PackageKit-gstreamer-plugin
+    sudo dnf install -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
     sudo dnf install -y gstreamer1-plugins-ugly gstreamer1-libav --allowerasing
 
     # Install Autotiling via Python dependencies natively
