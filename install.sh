@@ -293,10 +293,9 @@ fi
 # 2. Install Brave Browser (Origin) & 5. Flatpak Ecosystem
 if [ "$ONLY_CONFIG" = false ]; then
     msg "Installing Brave Browser (Origin Mode)..."
-    sudo dnf config-manager addrepo --from-repofile=https://brave.com
-    sudo rpm --import https://brave.com
-    sudo dnf install -y brave-origin
-
+    sudo dnf install dnf-plugins-core
+    sudo dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+    sudo dnf install brave-origin
 
 msg "Configuring Flathub..."
     flatpak remote-add --if-not-exists flathub https://flathub.org || true
