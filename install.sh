@@ -184,11 +184,11 @@ if [ "$ONLY_CONFIG" = false ]; then
         sudo chmod +x /usr/local/bin/autotiling
     }
 
-    # Enable Copr for nwg-look and compile desktop custom styling assets
+    # Enable Copr for tofik/nwg-shell and compile desktop custom styling assets
     mkdir -p "$TEMP_DIR/themes"
     
-    msg "Enabling ocsw/sway-extras Copr repository for nwg tools..."
-    sudo dnf copr enable -y ocsw/sway-extras
+    msg "Enabling tofik/nwg-shell Copr repository for nwg tools..."
+    sudo dnf copr enable -y tofik/nwg-shell
     sudo dnf install -y nwg-look nwg-displays
 
     msg "Installing Orchis GTK Theme natively..."
