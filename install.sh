@@ -117,7 +117,7 @@ PACKAGES_FILE_MANAGER=(
 )
 
 PACKAGES_AUDIO=(
-    pavucontrol pulsemixer pamixer pipewire-utils
+    pavucontrol pamixer pipewire-utils
 )
 
 PACKAGES_UTILITIES=(
@@ -312,3 +312,21 @@ if [ "$ONLY_CONFIG" = false ]; then
     msg "Installing Brave Browser (Origin Mode)..."
     curl -fsS https://brave.com | FLAVOR=origin sh
 
+msg "Configuring Flathub..."
+    flatpak remote-add --if-not-exists flathub https://flathub.org || true
+    flatpak update --appstream
+
+    if [ -f "flatpak_packages.txt" ]; then
+        msg "Installing Flatpak applications..."
+        while IFS= read -r app || [ -n "$app" ]; do
+            [[ -z "$app" || "$app" =~ ^# ]] && continue
+            echo "Installing Flatpak: $app"
+            flatpak install flathub "$app" -y --noninteractive || echo "Failed to install $app, skipping..."
+        done < flatpak_packages.txt
+    else
+        warn "flatpak_packages.txt not found. Skipping Flatpak app installs."
+    fi
+fi
+
+msg "Sway script environment updated for Fedora successfully!"
+exit 0
