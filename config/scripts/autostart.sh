@@ -22,7 +22,7 @@ systemctl --user start xdg-desktop-portal-wlr
 
 ## GTK / GNOME Interface Preferences
 gnome_schema="org.gnome.desktop.interface"
-gsettings set "$gnome_schema" gtk-theme 'Adwaita-dark'
+gsettings set "$gnome_schema" gtk-theme 'Adwaita'
 gsettings set "$gnome_schema" icon-theme 'Adwaita'
 gsettings set "$gnome_schema" cursor-theme 'Adwaita'
 gsettings set "$gnome_schema" font-name 'Adwaita Sans Regular 11'
