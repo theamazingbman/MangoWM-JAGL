@@ -79,6 +79,14 @@ include $config_dir/keybindings.conf
 
 ### Autostart
 exec_always $config_dir/scripts/autostart.sh
-exec_always { export GTK_THEME=Adwaita-dark }
+
+set $gnome-schema org.gnome.desktop.interface
+
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+    gsettings set $gnome-schema icon-theme 'Adwaita'
+    gsettings set $gnome-schema cursor-theme 'Adwaita'
+    gsettings set $gnome-schema font-name 'Adwaita Sans Regular 11'
+}
 
 #include /etc/sway/config.d/*
