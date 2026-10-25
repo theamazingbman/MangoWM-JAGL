@@ -140,7 +140,7 @@ PACKAGES_FONTS=(
 if [ "$ONLY_CONFIG" = false ]; then
     # Group development-tools installer fallback for build-essential
     msg "Installing base development group..."
-    sudo dnf install -y @"Development Tools" || die "Failed to install core build systems"
+    sudo dnf install -y @development-tools || die "Failed to install core build systems"
 
     msg "Installing core Sway packages..."
     sudo dnf install -y "${PACKAGES_CORE[@]}" || die "Failed to install core packages"
