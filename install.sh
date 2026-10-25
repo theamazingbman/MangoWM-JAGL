@@ -109,8 +109,7 @@ PACKAGES_SWAY=(
 )
 
 PACKAGES_UI=(
-    orchis-gtk-theme colloid-icon-theme
-    nwg-look xsettingsd NetworkManager-tui lxpolkit
+    xsettingsd NetworkManager-tui lxpolkit
 )
 
 PACKAGES_FILE_MANAGER=(
@@ -184,6 +183,28 @@ if [ "$ONLY_CONFIG" = false ]; then
         sudo wget -qO /usr/local/bin/autotiling "https://githubusercontent.com"
         sudo chmod +x /usr/local/bin/autotiling
     }
+
+    # Enable Copr for nwg-look and compile desktop custom styling assets
+    mkdir -p "$TEMP_DIR/themes"
+    
+    msg "Enabling ocsw/sway-extras Copr repository for nwg-look..."
+    sudo dnf copr enable -y ocsw/sway-extras
+    sudo dnf install -y nwg-look
+
+    msg "Installing Orchis GTK Theme natively..."
+    cd "$TEMP_DIR/themes"
+    git clone --depth 1 https://github.com
+    cd Orchis-theme
+    ./install.sh -t all -s compact --dest "$HOME/.themes" || warn "Orchis theme extraction skipped"
+
+    msg "Installing Colloid Icon Theme natively..."
+    cd "$TEMP_DIR/themes"
+    git clone --depth 1 https://github.com
+    cd Colloid-icon-theme
+    ./install.sh -t all --dest "$HOME/.icons" || warn "Colloid icon extraction skipped"
+    
+    # Return to script root context
+    cd "$SCRIPT_DIR"
 
     # Enable Fedora services
     sudo systemctl enable avahi-daemon acpid
@@ -291,21 +312,3 @@ if [ "$ONLY_CONFIG" = false ]; then
     msg "Installing Brave Browser (Origin Mode)..."
     curl -fsS https://brave.com | FLAVOR=origin sh
 
-    msg "Configuring Flathub..."
-    flatpak remote-add --if-not-exists flathub https://flathub.org || true
-    flatpak update --appstream
-
-    if [ -f "flatpak_packages.txt" ]; then
-        msg "Installing Flatpak applications..."
-        while IFS= read -r app || [ -n "$app" ]; do
-            [[ -z "$app" || "$app" =~ ^# ]] && continue
-            echo "Installing Flatpak: $app"
-            flatpak install flathub "$app" -y --noninteractive || echo "Failed to install $app, skipping..."
-        done < flatpak_packages.txt
-    else
-        warn "flatpak_packages.txt not found. Skipping Flatpak app installs."
-    fi
-fi
-
-msg "Sway script environment updated for Fedora successfully!"
-exit 0
