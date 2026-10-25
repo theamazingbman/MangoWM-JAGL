@@ -79,9 +79,10 @@ if [ "$ONLY_CONFIG" = false ]; then
     # 1. Install RPM Fusion Repositories
     msg "Installing RPM Fusion (Free and Non-Free)..."
     if ! rpm -q rpmfusion-free-release >/dev/null 2>&1; then
+        FEDORA_VERSION=$(rpm -E %fedora)
         sudo dnf install -y \
-            https://rpmfusion.org(rpm -E %fedora).noarch.rpm \
-            https://rpmfusion.org(rpm -E %fedora).noarch.rpm
+            "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm" \
+            "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm"
     else
         echo "RPM Fusion is already installed."
     fi
@@ -260,43 +261,40 @@ if [ -L ~/.config/gtklock ] && [ "$(readlink ~/.config/gtklock)" = ~/.config/swa
     rm ~/.config/gtklock
 fi
 
-msg "Downloading wallpaper directory..."
-if [ ! -d "$CONFIG_DIR/wallpaper" ]; then
-    # Setup default theme references
-    ln -sfn themes/github_dark "$CONFIG_DIR/current-theme"
+# Setup default theme references
+ln -sfn themes/github_dark "$CONFIG_DIR/current-theme"
 
-    # Setup default user structures
-    xdg-user-dirs-update
-    mkdir -p ~/Screenshots
+# Setup default user structures
+xdg-user-dirs-update
+mkdir -p ~/Screenshots
 
-    if [ -f "$SCRIPT_DIR/QUICKSTART.md" ]; then
-        cp "$SCRIPT_DIR/QUICKSTART.md" "$HOME/QUICKSTART-sway.md"
-    fi
+if [ -f "$SCRIPT_DIR/QUICKSTART.md" ]; then
+    cp "$SCRIPT_DIR/QUICKSTART.md" "$HOME/QUICKSTART-sway.md"
+fi
 
-    if [ -f "$SCRIPT_DIR/nvidia-setup.sh" ]; then
-        cp "$SCRIPT_DIR/nvidia-setup.sh" "$HOME/nvidia-setup.sh"
-        chmod +x "$HOME/nvidia-setup.sh"
-    fi
+if [ -f "$SCRIPT_DIR/nvidia-setup.sh" ]; then
+    cp "$SCRIPT_DIR/nvidia-setup.sh" "$HOME/nvidia-setup.sh"
+    chmod +x "$HOME/nvidia-setup.sh"
+fi
 
-    # 2. Install Brave Browser (Origin) & 5. Flatpak Ecosystem
-    if [ "$ONLY_CONFIG" = false ]; then
-        msg "Installing Brave Browser (Origin Mode)..."
-        curl -fsS https://brave.com | FLAVOR=origin sh
+# 2. Install Brave Browser (Origin) & 5. Flatpak Ecosystem
+if [ "$ONLY_CONFIG" = false ]; then
+    msg "Installing Brave Browser (Origin Mode)..."
+    curl -fsS https://brave.com | FLAVOR=origin sh
 
-        msg "Configuring Flathub..."
-        flatpak remote-add --if-not-exists flathub https://flathub.org
-        flatpak update --appstream
+    msg "Configuring Flathub..."
+    flatpak remote-add --if-not-exists flathub https://flathub.org || true
+    flatpak update --appstream
 
-        if [ -f "flatpak_packages.txt" ]; then
-            msg "Installing Flatpak applications..."
-            while IFS= read -r app || [ -n "$app" ]; do
-                [[ -z "$app" || "$app" =~ ^# ]] && continue
-                echo "Installing Flatpak: $app"
-                flatpak install flathub "$app" -y --noninteractive || echo "Failed to install $app, skipping..."
-            done < flatpak_packages.txt
-        else
-            warn "flatpak_packages.txt not found. Skipping Flatpak app installs."
-        fi
+    if [ -f "flatpak_packages.txt" ]; then
+        msg "Installing Flatpak applications..."
+        while IFS= read -r app || [ -n "$app" ]; do
+            [[ -z "$app" || "$app" =~ ^# ]] && continue
+            echo "Installing Flatpak: $app"
+            flatpak install flathub "$app" -y --noninteractive || echo "Failed to install $app, skipping..."
+        done < flatpak_packages.txt
+    else
+        warn "flatpak_packages.txt not found. Skipping Flatpak app installs."
     fi
 fi
 
