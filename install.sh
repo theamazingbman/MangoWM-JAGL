@@ -199,7 +199,7 @@ fi
 msg "Configuring Adwaita-Dark GTK theme..."
 if [ "$ONLY_CONFIG" = false ]; then
     # Ensure Fedora's native adwaita theme engines are explicitly installed
-    sudo dnf install -y adwaita-gtk2-theme adwaita-icon-theme dconf
+    sudo dnf install -y adwaita-icon-theme dconf
 fi
 
 # Force system to use dark preference across GTK environments
