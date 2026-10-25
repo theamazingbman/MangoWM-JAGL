@@ -1,13 +1,10 @@
 com.notesnook.Notesnook
 io.gitlab.librewolf-community
 com.stremio.Stremio
-org.gimp.GIMP
-org.inkscape.Inkscape
 org.kde.kdenlive
 org.librecad.librecad
 net.sourceforge.mcomix
 com.transmissionbt.Transmission
-tv.kodi.Kodi
 net.filebot.FileBot
 app.ytmdesktop.ytmdesktop
 media.emby.EmbyTheater
@@ -17,4 +14,3 @@ io.github.openhv.OpenHV
 info.beyondallreason.bar
 net.retrodeck.retrodeck
 io.gitlab.adhami3310.Impression
-dev.zed.Zed
