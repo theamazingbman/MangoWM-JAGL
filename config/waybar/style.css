@@ -87,7 +87,7 @@ window#waybar {
 
 #workspaces button.active {
     background-color: @mauve;
-    color: @base;
+    color: @sapphire;
     min-width: 25px;
 }
 
