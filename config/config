@@ -12,7 +12,7 @@ set $up k
 set $right l
 set $term ptyxis
 set $config_dir ~/.config/sway
-set $menu fuzzel
+set $menu fuzzel --config ~/.config/sway/fuzzel/fuzzel.ini
 
 ### Output configuration
 # Simple static wallpaper with swaybg
