@@ -155,7 +155,7 @@
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
         "format": "{icon}{temperatureF}°",
-        "format-icons": [" "],
+        "format-icons": [" "],
         "tooltip": false,
         "on-click": "pytrix -e btop"
     },
