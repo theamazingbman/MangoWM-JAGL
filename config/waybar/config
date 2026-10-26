@@ -128,7 +128,7 @@
         "format-alt": "{:L%d %B W%v %Y}"
     },
     "cpu": {
-        "format": "  {usage}%",
+        "format": " CPU {usage}%",
         "tooltip": false,
         "on-click": "pytrix -e btop"
     },
@@ -139,12 +139,12 @@
             "m": 30
         },
         "interval": 30,
-        "format": "\udb83\udf86 {used}GB",
+        "format": "MEM {used}GB",
         "rotate": 0,
-        "format-m": "\udb83\udf85 {used}GB",
-        "format-h": "\udb81\udcc5 {used}GB",
-        "format-c": "\uf421 {used}GB",
-        "format-alt": "\udb83\udf86 {percentage}%",
+        "format-m": "MEM {used}GB",
+        "format-h": "MEM {used}GB",
+        "format-c": "MEM {used}GB",
+        "format-alt": "MEM {percentage}%",
         "max-length": 10,
         "tooltip": true,
         "tooltip-format": "\udb83\udf86 Memory usage: {percentage}%\n\ue266 Used: {used:0.2f}GB / {total:0.2f}GB\n\uf85a Available: {availGB:0.2f}GB\n\uf233 Swap used: {swapUsed:0.2f}GB / {swapTotal:0.2f}GB ({swapPercentage}%)"
@@ -157,7 +157,7 @@
         "format": "{icon}{temperatureF}°",
         "format-icons": [" "],
         "tooltip": false,
-        "on-click": "alacritty -e btop"
+        "on-click": "pytrix -e btop"
     },
     "backlight": {
         // "device": "acpi_video1",
@@ -249,13 +249,13 @@
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "custom/appmenu": {
-        "format": "  Apps",
+        "format": "  ",
         "on-click": "fuzzel --config ~/.config/sway/fuzzel/fuzzel.ini",
         "tooltip": true,
         "tooltip-format": "Open App Menu"
     },
     "custom/filemanager": {
-        "format": "  Files",
+        "format": "  ",
         "on-click": "nautilus",
         "tooltip": true,
         "tooltip-format": "Open File Manager"
