@@ -250,7 +250,7 @@
     },
     "custom/appmenu": {
         "format": "  Apps",
-        "on-click": "fuzzel",
+        "on-click": "fuzzel --config ~/.config/sway/fuzzel/fuzzel.ini",
         "tooltip": true,
         "tooltip-format": "Open App Menu"
     },
