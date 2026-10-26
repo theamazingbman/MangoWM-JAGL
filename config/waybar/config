@@ -139,12 +139,12 @@
             "m": 30
         },
         "interval": 30,
-        "format": "MEM {used}GB",
+        "format": "RAM {used}GB",
         "rotate": 0,
-        "format-m": "MEM {used}GB",
-        "format-h": "MEM {used}GB",
-        "format-c": "MEM {used}GB",
-        "format-alt": "MEM {percentage}%",
+        "format-m": "RAM {used}GB",
+        "format-h": "RAM {used}GB",
+        "format-c": "RAM {used}GB",
+        "format-alt": "RAM {percentage}%",
         "max-length": 10,
         "tooltip": true,
         "tooltip-format": "\udb83\udf86 Memory usage: {percentage}%\n\ue266 Used: {used:0.2f}GB / {total:0.2f}GB\n\uf85a Available: {availGB:0.2f}GB\n\uf233 Swap used: {swapUsed:0.2f}GB / {swapTotal:0.2f}GB ({swapPercentage}%)"
