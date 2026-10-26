@@ -1,4 +1,4 @@
-# Fedora Sway Setup (based on JustAGuy Linux's sway-setup)
+# Fedora Sway Setup (based on the Butterbian sway-setup)
 
 This is a best-effort Sway port to Fedora of Drew's`sway-setup` from JustAGuy Linux.
 
