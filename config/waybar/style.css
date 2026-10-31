@@ -71,8 +71,8 @@ window#waybar {
 #power-profiles-daemon,
 #bluetooth,
 #mpd {
-    padding: 0px 6px;
-    margin: 6px 2px;
+    padding: 2px 6px;
+    margin: 2px 2px;
     color: @text;
     background-color: transparent;
     border: none;
