@@ -5,13 +5,23 @@
 pkill -x swaync 2>/dev/null || true
 swaync &
 
-## Waybar
-pkill -x waybar
+## Status bar
+pkill -x waybar 2>/dev/null || true
 sleep 1
 
-waybar \
-    -c "/home/terryb/.config/sway/waybar/config" \
-    -s "/home/terryb/.config/sway/waybar/style.css" &
+WAYBAR_DIR="$HOME/.config/sway/waybar"
+WAYBAR_LOG="$HOME/.cache/waybar.log"
+
+mkdir -p "$HOME/.cache"
+
+if [[ -f "$WAYBAR_DIR/config" && -f "$WAYBAR_DIR/style.css" ]]; then
+    waybar \
+        -c "$WAYBAR_DIR/config" \
+        -s "$WAYBAR_DIR/style.css" \
+        > "$WAYBAR_LOG" 2>&1 &
+else
+    echo "Waybar config or stylesheet missing." >> "$WAYBAR_LOG"
+fi
 
 ## System tray / polkit
 lxpolkit &
