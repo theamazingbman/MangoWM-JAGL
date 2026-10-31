@@ -104,6 +104,33 @@ install_nordic_theme() {
     msg "Nordic GTK theme installed to $theme_dir/Nordic."
 }
 
+install_wallpapers() {
+    local pictures_dir
+    local wallpaper_dir
+
+    pictures_dir="$(xdg-user-dir PICTURES 2>/dev/null || true)"
+    pictures_dir="${pictures_dir:-$HOME/Pictures}"
+    wallpaper_dir="$pictures_dir/wallpapers"
+
+    msg "Downloading wallpapers..."
+
+    mkdir -p "$wallpaper_dir"
+
+    curl -fL --retry 3 \
+        "https://github.com/theamazingbman/wallpapers/archive/refs/heads/main.zip" \
+        -o "$TEMP_DIR/wallpapers.zip" ||
+        {
+            warn "Could not download wallpapers; continuing."
+            return 0
+        }
+
+    unzip -nq -j "$TEMP_DIR/wallpapers.zip" \
+        -d "$wallpaper_dir" ||
+        warn "Some wallpapers could not be extracted."
+
+    msg "Wallpapers installed to $wallpaper_dir."
+}
+
 if [[ "$ONLY_CONFIG" == false ]]; then
     msg "Setting up RPM Fusion repositories..."
     FEDORA_VERSION="$(rpm -E %fedora)"
