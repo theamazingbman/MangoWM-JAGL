@@ -5,14 +5,13 @@
 pkill -x swaync 2>/dev/null || true
 swaync &
 
-## Status bar
-pkill -x waybar 2>/dev/null || true
-
+## Waybar
+pkill -x waybar
 sleep 1
 
 waybar \
-    -c "$HOME/.config/sway/waybar/config" \
-    -s "$HOME/.config/sway/waybar/style.css" &
+    -c "/home/terryb/.config/sway/waybar/config" \
+    -s "/home/terryb/.config/sway/waybar/style.css" &
 
 ## System tray / polkit
 lxpolkit &
