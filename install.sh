@@ -104,6 +104,7 @@ install_nordic_theme() {
     msg "Nordic GTK theme installed to $theme_dir/Nordic."
 }
 
+
 install_wallpapers() {
     local pictures_dir
     local wallpaper_dir
@@ -124,7 +125,7 @@ install_wallpapers() {
             return 0
         }
 
-    unzip -nq -j "$TEMP_DIR/wallpapers.zip" \
+    unzip -oq -j "$TEMP_DIR/wallpapers.zip" \
         -d "$wallpaper_dir" ||
         warn "Some wallpapers could not be extracted."
 
