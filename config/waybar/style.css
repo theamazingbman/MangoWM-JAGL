@@ -1,8 +1,8 @@
 /* --- Color Variables --- */
 @define-color bg-trans alpha(@base,0.65);
-@define-color base     #292a2e;
-@define-color surface  #363a4f;
-@define-color overlay  #494d64;
+@define-color base     #000000;
+@define-color surface  #202020;
+@define-color overlay  #363636;
 @define-color text     #cad3f5;
 @define-color lavender #b7bdf8;
 @define-color sapphire #7dc4e4;
@@ -23,25 +23,25 @@
     min-height: 0;
 }
 
-/* --- Main Window Styling (Floating Island) --- */
+/* --- Main Window Styling --- */
 window#waybar {
-    background-color: @base;
+    background-color: #000000;
     color: @text;
     transition-property: background-color;
     transition-duration: 0.5s;
 }
 
-/* --- Workspaces Container (Keeps the Pill Shape) --- */
+/* --- Workspaces Container --- */
 #workspaces {
-    padding: 0px 14px;
+    padding: 0px 5px;
     margin: 6px 4px;
-    background-color: @base;
+    background-color: #000000;
     border: 1px solid @overlay;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.116) 0px 1px 3px;
 }
 
-/* --- Other Modules Formatting (Pill shape removed) --- */
+/* --- Other Modules Formatting --- */
 #clock,
 #battery,
 #cpu,
@@ -63,7 +63,6 @@ window#waybar {
     padding: 0px 6px;
     margin: 6px 2px;
     color: @text;
-    /* Pill styling removed so they sit cleanly on the main bar background */
     background-color: transparent;
     border: none;
     border-radius: 0px;
@@ -72,11 +71,11 @@ window#waybar {
 
 /* --- Workspaces Buttons Inside the Pill --- */
 #workspaces button {
-    padding: 0px 8px;
-    margin: 4px 2px;
+    padding: 0px 4px;
+    margin: 2px 1px;
     color: @text;
     background-color: transparent;
-    border-radius: 8px;
+    border-radius: 7px;
     transition: all 0.3s ease;
 }
 
@@ -151,7 +150,7 @@ window#waybar {
 
 #memory {
     color: @text;
-    min-width: 78px; /* adjust as needed */
+    min-width: 78px;
 }
 
 #tray {
@@ -173,4 +172,19 @@ window#waybar {
         background-color: @surface;
         color: @red;
     }
+}
+
+/* --- Right-Side System Module Spacing --- */
+#custom-notification,
+#pulseaudio,
+#bluetooth,
+#network,
+#custom-power {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+/* --- Power Button Edge Spacing --- */
+#custom-power {
+    margin-right: 18px;
 }
