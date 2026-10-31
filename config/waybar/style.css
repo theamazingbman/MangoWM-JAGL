@@ -42,23 +42,15 @@ window#waybar {
     transition-duration: 0.5s;
 }
 
-#workspaces button {
-    padding: 1px 4px;
-    margin: 1px 1px;
-    color: @text;
-    background-color: transparent;
-    border-radius: 7px;
-    transition: all 0.3s ease;
-}
 /* --- Workspaces Container --- */
-/*#workspaces {
-   / padding: 0px 5px;
-   / margin: 6px 4px;
-   / background-color: #000000;
-   / border: 1px solid @overlay;
-   / border-radius: 10px;
-   / box-shadow: rgba(0, 0, 0, 0.116) 0px 1px 3px;
-/}
+#workspaces {
+    padding: 0px 5px;
+    margin: 6px 4px;
+    background-color: #000000;
+    border: 1px solid @overlay;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.116) 0px 1px 3px;
+}
 
 /* --- Other Modules Formatting --- */
 #clock,
@@ -90,8 +82,8 @@ window#waybar {
 
 /* --- Workspaces Buttons Inside the Pill --- */
 #workspaces button {
-    padding: 0px 4px;
-    margin: 2px 1px;
+    padding: 1px 4px;
+    margin: 1px 1px;
     color: @text;
     background-color: transparent;
     border-radius: 7px;
@@ -205,5 +197,5 @@ window#waybar {
 
 /* --- Power Button Edge Spacing --- */
 #custom-power {
-    margin-right: 18px;
+    margin-right: 12px;
 }
