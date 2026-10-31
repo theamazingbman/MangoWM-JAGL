@@ -23,6 +23,17 @@
     min-height: 0;
 }
 
+/* --- Automatic Bar Height --- */
+window#waybar {
+    min-height: 0;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    min-height: 0;
+}
+
 /* --- Main Window Styling --- */
 window#waybar {
     background-color: #000000;
