@@ -45,11 +45,10 @@ window#waybar {
 /* --- Workspaces Container --- */
 #workspaces {
     padding: 0px 5px;
-    margin: 6px 4px;
+    margin: 3px 4px;
     background-color: #000000;
     border: 1px solid @overlay;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.116) 0px 1px 3px;
 }
 
 /* --- Other Modules Formatting --- */
