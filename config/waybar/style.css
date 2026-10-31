@@ -51,7 +51,7 @@ window#waybar {
     transition: all 0.3s ease;
 }
 /* --- Workspaces Container --- */
-/#workspaces {
+/*#workspaces {
    / padding: 0px 5px;
    / margin: 6px 4px;
    / background-color: #000000;
