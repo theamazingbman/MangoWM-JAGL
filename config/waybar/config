@@ -8,6 +8,8 @@
     "modules-left": [
         "custom/appmenu",
         "custom/filemanager",
+        "custom/browser",
+        "custom/notes",
         //"sway/mode",
         //"sway/scratchpad",
         //"custom/media"
@@ -126,9 +128,9 @@
         "format-alt": "{:L%d %B W%v %Y}"
     },
     "cpu": {
-        "format": " CPU {usage}%",
+        "format": " {usage}%",
         "tooltip": false,
-        "on-click": "pytrix -e btop"
+        "on-click": "foot -e btop"
     },
     "memory": {
         "states": {
@@ -137,12 +139,12 @@
             "m": 30
         },
         "interval": 30,
-        "format": "RAM {used}GB",
+        "format": " {used}GB",
         "rotate": 0,
-        "format-m": "RAM {used}GB",
-        "format-h": "RAM {used}GB",
-        "format-c": "RAM {used}GB",
-        "format-alt": "RAM {percentage}%",
+        "format-m": " {used}GB",
+        "format-h": " {used}GB",
+        "format-c": " {used}GB",
+        "format-alt": " {percentage}%",
         "max-length": 10,
         "tooltip": true,
         "tooltip-format": "\udb83\udf86 Memory usage: {percentage}%\n\ue266 Used: {used:0.2f}GB / {total:0.2f}GB\n\uf85a Available: {availGB:0.2f}GB\n\uf233 Swap used: {swapUsed:0.2f}GB / {swapTotal:0.2f}GB ({swapPercentage}%)"
@@ -155,7 +157,7 @@
         "format": "{icon}{temperatureF}°",
         "format-icons": [" "],
         "tooltip": false,
-        "on-click": "pytrix -e btop"
+        "on-click": "system monitor"
     },
     "backlight": {
         // "device": "acpi_video1",
@@ -201,7 +203,6 @@
         "format-linked": "\udb80\ude00 {ifname} (No IP)",
         "format-disconnected": "\udb81\uddaa ",
         "tooltip-format-disconnected": "Disconnected",
-        "format-alt": "<span foreground='#99ffdd'>\uf019 {bandwidthDownBytes}</span> <span foreground='#ffcc66'>\uf093 {bandwidthUpBytes}</span>",
         "interval": 2,
         "on-click": "nm-connection-editor"
     },
@@ -257,6 +258,20 @@
         "on-click": "nautilus",
         "tooltip": true,
         "tooltip-format": "Open File Manager"
+    },
+            
+    "custom/browser": {
+        "format": "  ",
+        "on-click": "brave-origin",
+        "tooltip": true,
+        "tooltip-format": "Browse the Web"
+        
+    },
+    "custom/notes": {
+        "format": "  ",
+        "on-click": "flatpak run com.notesnook.Notesnook",
+        "tooltip": true,
+        "tooltip-format": "Open Notes"
     },
     "custom/power": {
         "format" : "⏻ ",
