@@ -265,6 +265,23 @@ mkdir -p "$CONFIG_DIR"
 [[ -d "$SCRIPT_DIR/config" ]] || die "Config directory not found: $SCRIPT_DIR/config"
 cp -a "$SCRIPT_DIR/config/." "$CONFIG_DIR/" || die "Failed to copy configs"
 
+# ==========================================
+# Set executable permissions for Sway scripts
+# ==========================================
+SWAY_SCRIPTS="$CONFIG_DIR/scripts"
+
+if [[ -d "$SWAY_SCRIPTS" ]]; then
+    # Only mark scripts that are intended to be launched directly.
+    for script in "$SWAY_SCRIPTS/power" "$SWAY_SCRIPTS/screen-off"; do
+        if [[ -f "$script" ]]; then
+            chmod +x "$script" || die "Could not make executable: $script"
+        fi
+    done
+    msg "Sway power and screen-off script permissions configured."
+else
+    warn "Sway scripts directory not found: $SWAY_SCRIPTS"
+fi
+
 if [[ -e "$HOME/.config/foot" && ! -L "$HOME/.config/foot" ]]; then
     mv "$HOME/.config/foot" "$HOME/.config/foot.bak.$(date +%s)"
     msg "Backed up existing ~/.config/foot"
