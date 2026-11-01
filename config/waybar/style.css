@@ -128,8 +128,8 @@ window#waybar {
     min-width: 25px;
 }
 
-/* Visible workspace on another output */
-#workspaces button.visible:not(.focused) {
+/* Occupied workspace - if your module provides this class */
+#workspaces button.occupied:not(.focused) {
     background-color: @grey;
     color: @text;
     min-width: 25px;
