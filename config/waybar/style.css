@@ -6,6 +6,7 @@
 @define-color text     #cad3f5;
 @define-color lavender #b7bdf8;
 @define-color sapphire #7dc4e4;
+@define-color blue     #5056fa;
 @define-color green    #a6da95;
 @define-color yellow   #eed49f;
 @define-color red      #ed8796;
@@ -95,7 +96,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-    background-color: @sapphire;
+    background-color: @blue;
     color: @base;
     min-width: 25px;
 }
