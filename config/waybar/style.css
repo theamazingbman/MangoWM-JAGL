@@ -1,5 +1,5 @@
 /* --- Color Variables --- */
-@define-color bg-trans alpha(@base,0.65);
+@define-color bg-trans alpha(@base, 0.65);
 @define-color base     #000000;
 @define-color surface  #202020;
 @define-color overlay  #363636;
@@ -44,65 +44,13 @@ window#waybar {
     transition-duration: 0.5s;
 }
 
-/* --- Workspaces Container --- */
+/* --- Workspaces Container (No Outline) --- */
 #workspaces {
     padding: 0px 5px;
     margin: 3px 4px;
-    background-color: #000000;
-    border: 1px solid @overlay;
-    border-radius: 10px;
-}
-
-/* --- Other Modules Formatting --- */
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#network,
-#pulseaudio,
-#wireplumber,
-#custom-media,
-#tray,
-#mode,
-#idle_inhibitor,
-#scratchpad,
-#power-profiles-daemon,
-#bluetooth,
-#mpd {
-    padding: 2px 6px;
-    margin: 2px 2px;
-    color: @text;
     background-color: transparent;
     border: none;
-    border-radius: 0px;
-    box-shadow: none;
-}
-
-/* --- Workspaces Buttons Inside the Pill --- */
-#workspaces button {
-    padding: 1px 4px;
-    margin: 1px 1px;
-    color: @text;
-    background-color: transparent;
-    border-radius: 7px;
-    transition: all 0.3s ease;
-}
-
-#workspaces button:hover {
-    background-color: @overlay;
-    color: @lavender;
-}
-
-/* --- Workspaces Container --- */
-#workspaces {
-    padding: 0px 5px;
-    margin: 3px 4px;
-    background-color: @base;
-    border: 1px solid @overlay;
-    border-radius: 10px;
+    border-radius: 0;
 }
 
 /* --- Workspace Buttons --- */
@@ -147,12 +95,73 @@ window#waybar {
     color: @base;
 }
 
-/* --- System Module Specific Highlights --- */
+/* --- General Module Formatting --- */
+#clock,
+#battery,
+#disk,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#bluetooth,
+#mpd {
+    padding: 2px 6px;
+    margin: 2px 2px;
+    color: @text;
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+/* --- System Stats Shared Pill --- */
+#temperature,
+#cpu,
+#memory {
+    padding: 2px 6px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: @text;
+    background-color: @base;
+    box-shadow: none;
+}
+
+/* Left edge of pill */
+#temperature {
+    margin-left: 8px;
+    border: 1px solid @overlay;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+}
+
+/* Middle of pill */
+#cpu {
+    border-top: 1px solid @overlay;
+    border-bottom: 1px solid @overlay;
+}
+
+/* Right edge of pill */
+#memory {
+    margin-right: 8px;
+    border: 1px solid @overlay;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    min-width: 78px;
+}
+
+/* --- Clock --- */
 #clock {
     color: @text;
     font-weight: bold;
 }
 
+/* --- Battery --- */
 #battery {
     color: @green;
 }
@@ -171,6 +180,7 @@ window#waybar {
     animation-direction: alternate;
 }
 
+/* --- Network --- */
 #network {
     color: @text;
 }
@@ -178,21 +188,21 @@ window#waybar {
 #network.disconnected {
     color: @red;
 }
-/* VPN Connected */
+
+/* --- VPN --- */
 #custom-vpn.connected {
     color: @sapphire;
 }
 
-/* VPN Disconnected */
 #custom-vpn.disconnected {
     color: @overlay;
 }
 
-/* VPN Error */
 #custom-vpn.error {
     color: @red;
 }
 
+/* --- Audio --- */
 #pulseaudio {
     color: @text;
 }
@@ -202,10 +212,12 @@ window#waybar {
     background-color: transparent;
 }
 
+/* --- Bluetooth --- */
 #bluetooth {
     color: @text;
 }
 
+/* --- System Monitor Colors --- */
 #temperature {
     color: @text;
 }
@@ -216,9 +228,9 @@ window#waybar {
 
 #memory {
     color: @text;
-    min-width: 78px;
 }
 
+/* --- System Tray --- */
 #tray {
     padding: 0px 10px;
 }
