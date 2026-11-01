@@ -285,11 +285,11 @@
         "tooltip-format": "Open Notes"
     },
    "custom/vpn": {
-        "exec": "$HOME/.config/sway/scripts/vpn-status.sh",
-        "return-type": "json",
-        "interval": 5,
-        "format": "{}",
-        "on-click": "$HOME/.config/sway/scripts/vpn-toggle.sh"
+    "exec": "$HOME/.config/sway/scripts/vpn-status.sh",
+    "return-type": "json",
+    "interval": 5,
+    "format": "{}",
+    "on-click": "$HOME/.config/sway/scripts/vpn-toggle.sh"
     },
     "custom/power": {
         "format" : "⏻ ",
