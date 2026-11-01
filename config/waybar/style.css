@@ -152,6 +152,11 @@ window#waybar {
 
 /* VPN Disconnected */
 #custom-vpn.disconnected {
+    color: @overlay;
+}
+
+/* VPN Error */
+#custom-vpn.error {
     color: @red;
 }
 
