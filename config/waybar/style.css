@@ -6,7 +6,7 @@
 @define-color text     #d5d8e0;
 @define-color lavender #b7bdf8;
 @define-color sapphire #7dc4e4;
-@define-color blue     #5056fa;
+@define-color blue     #285577;
 @define-color green    #a6da95;
 @define-color yellow   #eed49f;
 @define-color red      #ed8796;
@@ -124,7 +124,7 @@ window#waybar {
 /* Active workspace - light blue */
 #workspaces button.focused {
     background-color: @blue;
-    color: @base;
+    color: @text;
     min-width: 25px;
 }
 
