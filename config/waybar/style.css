@@ -123,7 +123,7 @@ window#waybar {
 
 /* Active workspace - light blue */
 #workspaces button.focused {
-    background-color: @sapphire;
+    background-color: @blue;
     color: @base;
     min-width: 25px;
 }
