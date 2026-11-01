@@ -11,7 +11,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term ptyxis
+set $term foot
 set $config_dir ~/.config/sway
 set $menu fuzzel --config ~/.config/sway/fuzzel/fuzzel.ini
 
