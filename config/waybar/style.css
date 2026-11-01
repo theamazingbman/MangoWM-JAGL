@@ -96,19 +96,46 @@ window#waybar {
     color: @lavender;
 }
 
-#workspaces button.active {
-    background-color: @blue;
+/* --- Workspaces Container --- */
+#workspaces {
+    padding: 0px 5px;
+    margin: 3px 4px;
+    background-color: @base;
+    border: 1px solid @overlay;
+    border-radius: 10px;
+}
+
+/* --- Workspace Buttons --- */
+#workspaces button {
+    padding: 1px 4px;
+    margin: 1px 1px;
+    color: @text;
+    background-color: transparent;
+    border-radius: 7px;
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+#workspaces button:hover {
+    background-color: @overlay;
+    color: @lavender;
+}
+
+/* Currently focused workspace */
+#workspaces button.focused {
+    background-color: @sapphire;
     color: @base;
     min-width: 25px;
 }
 
-/* Workspace with open applications */
-#workspaces button.occupied:not(.active) {
+/* Visible workspace on another output */
+#workspaces button.visible:not(.focused) {
     background-color: @grey;
     color: @text;
     min-width: 25px;
 }
 
+/* Urgent workspace */
 #workspaces button.urgent {
     background-color: @red;
     color: @base;
