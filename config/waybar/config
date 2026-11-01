@@ -122,10 +122,20 @@
         // }
     },
     "clock": {
-        // "timezone": "America/Denver",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:L%a %b %d %I:%M %p}",
-        "format-alt": "{:L%d %B W%v %Y}"
+    // "timezone": "America/Denver",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "{:L%a %b %d %I:%M %p}",
+    "format-alt": "{:L%d %B W%v %Y}",
+
+    "calendar": {
+        "mode": "month",
+        "mode-mon-col": 3,
+        "weeks-pos": "right",
+        "on-scroll": 1,
+        "format": {
+            "today": "<span color='#7dc4e4'><b>{}</b></span>"
+        }
+    }
     },
     "cpu": {
         "format": " {usage}%",
