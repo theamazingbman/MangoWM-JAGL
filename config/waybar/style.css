@@ -13,10 +13,13 @@
 @define-color grey     #6e6d6d;
 @define-color mauve    #c6a0f6;
 
+
 /* --- Global Configurations --- */
 * {
     font-family:
-        "JetBrainsMono Nerd Font", "Font Awesome 6 Free", "Helvetica Neue",
+        "JetBrainsMono Nerd Font",
+        "Font Awesome 6 Free",
+        "Helvetica Neue",
         sans-serif;
     font-size: 15px;
     font-weight: bold;
@@ -25,9 +28,14 @@
     min-height: 0;
 }
 
+
 /* --- Automatic Bar Height --- */
 window#waybar {
     min-height: 0;
+    background-color: #000000;
+    color: @text;
+    transition-property: background-color;
+    transition-duration: 0.5s;
 }
 
 .modules-left,
@@ -36,13 +44,6 @@ window#waybar {
     min-height: 0;
 }
 
-/* --- Main Window Styling --- */
-window#waybar {
-    background-color: #000000;
-    color: @text;
-    transition-property: background-color;
-    transition-duration: 0.5s;
-}
 
 /* --- Workspaces Container (No Outline) --- */
 #workspaces {
@@ -52,6 +53,7 @@ window#waybar {
     border: none;
     border-radius: 0;
 }
+
 
 /* --- Workspace Buttons --- */
 #workspaces button {
@@ -63,37 +65,38 @@ window#waybar {
     transition: all 0.3s ease;
 }
 
-/* Hover */
+/* Workspace Hover */
 #workspaces button:hover {
     background-color: @overlay;
     color: @lavender;
 }
 
-/* Active workspace - light blue */
+/* Active Workspace */
 #workspaces button.focused {
     background-color: @blue;
     color: @text;
     min-width: 25px;
 }
 
-/* Occupied workspace - grey */
+/* Occupied Workspace */
 #workspaces button:not(.empty):not(.focused):not(.urgent) {
     background-color: @grey;
     color: @text;
     min-width: 25px;
 }
 
-/* Empty workspace - transparent */
+/* Empty Workspace */
 #workspaces button.empty:not(.focused) {
     background-color: transparent;
     color: @text;
 }
 
-/* Urgent workspace - red */
+/* Urgent Workspace */
 #workspaces button.urgent {
     background-color: @red;
     color: @base;
 }
+
 
 /* --- General Module Formatting --- */
 #clock,
@@ -116,56 +119,56 @@ window#waybar {
     color: @text;
     background-color: transparent;
     border: none;
-    border-radius: 0px;
+    border-radius: 0;
     box-shadow: none;
 }
+
 
 /* --- System Stats Shared Pill --- */
 #temperature,
 #cpu,
 #memory {
-    padding: 2px 6px;
-    margin: 2px 0px;
+    padding: 2px 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 0;
+    margin-right: 0;
     color: @text;
     background-color: @base;
-    border: none;
+    border-top: 1px solid @overlay;
+    border-bottom: 1px solid @overlay;
     border-radius: 0;
-    box-shadow:
-        inset 0 1px @overlay,
-        inset 0 -1px @overlay;
+    box-shadow: none;
 }
 
-/* Left rounded edge */
+/* Left Rounded Edge */
 #temperature {
     margin-left: 8px;
+    border-left: 1px solid @overlay;
     border-radius: 10px 0 0 10px;
-    box-shadow:
-        inset 1px 0 @overlay,
-        inset 0 1px @overlay,
-        inset 0 -1px @overlay;
 }
 
-/* Middle section */
+/* Middle Section */
 #cpu {
-    border-radius: 0;
+    border-left: none;
+    border-right: none;
 }
 
-/* Right rounded edge */
+/* Right Rounded Edge */
 #memory {
     margin-right: 8px;
-    min-width: 78px;
+    border-right: 1px solid @overlay;
     border-radius: 0 10px 10px 0;
-    box-shadow:
-        inset -1px 0 @overlay,
-        inset 0 1px @overlay,
-        inset 0 -1px @overlay;
+    min-width: 78px;
 }
+
 
 /* --- Clock --- */
 #clock {
     color: @text;
     font-weight: bold;
 }
+
 
 /* --- Battery --- */
 #battery {
@@ -186,6 +189,7 @@ window#waybar {
     animation-direction: alternate;
 }
 
+
 /* --- Network --- */
 #network {
     color: @text;
@@ -194,6 +198,7 @@ window#waybar {
 #network.disconnected {
     color: @red;
 }
+
 
 /* --- VPN --- */
 #custom-vpn.connected {
@@ -208,6 +213,7 @@ window#waybar {
     color: @red;
 }
 
+
 /* --- Audio --- */
 #pulseaudio {
     color: @text;
@@ -218,23 +224,20 @@ window#waybar {
     background-color: transparent;
 }
 
+
 /* --- Bluetooth --- */
 #bluetooth {
     color: @text;
 }
 
+
 /* --- System Monitor Colors --- */
-#temperature {
-    color: @text;
-}
-
-#cpu {
-    color: @text;
-}
-
+#temperature,
+#cpu,
 #memory {
     color: @text;
 }
+
 
 /* --- System Tray --- */
 #tray {
@@ -250,6 +253,7 @@ window#waybar {
     background-color: @red;
 }
 
+
 /* --- Hardware Critical Animations --- */
 @keyframes blink {
     to {
@@ -257,6 +261,7 @@ window#waybar {
         color: @red;
     }
 }
+
 
 /* --- Right-Side System Module Spacing --- */
 #custom-notification,
@@ -267,6 +272,7 @@ window#waybar {
     margin-left: 8px;
     margin-right: 8px;
 }
+
 
 /* --- Power Button Edge Spacing --- */
 #custom-power {
