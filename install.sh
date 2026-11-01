@@ -268,18 +268,24 @@ cp -a "$SCRIPT_DIR/config/." "$CONFIG_DIR/" || die "Failed to copy configs"
 # ==========================================
 # Set executable permissions for Sway scripts
 # ==========================================
+
 SWAY_SCRIPTS="$CONFIG_DIR/scripts"
 
 if [[ -d "$SWAY_SCRIPTS" ]]; then
-    # Only mark scripts that are intended to be launched directly.
-    for script in "$SWAY_SCRIPTS/power" "$SWAY_SCRIPTS/screen-off"; do
-        if [[ -f "$script" ]]; then
-            chmod +x "$script" || die "Could not make executable: $script"
-        fi
-    done
-    msg "Sway power and screen-off script permissions configured."
+
+    msg "Setting executable permissions for Sway scripts..."
+
+    find "$SWAY_SCRIPTS" -maxdepth 1 -type f \
+        \( -name "*.sh" -o -name "power" -o -name "screen-off" -o -name "control-center" \) \
+        -exec chmod +x {} + ||
+        die "Could not set Sway script permissions."
+
+    msg "All Sway scripts are executable."
+
 else
+
     warn "Sway scripts directory not found: $SWAY_SCRIPTS"
+
 fi
 
 if [[ -e "$HOME/.config/foot" && ! -L "$HOME/.config/foot" ]]; then
