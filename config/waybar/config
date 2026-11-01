@@ -32,6 +32,7 @@
         //  "battery#bat2",
         "pulseaudio",
         "bluetooth",
+        "custom/vpn",
         "network",
         //   "power-profiles-daemon",
         "custom/power"
@@ -282,6 +283,13 @@
         "on-click": "flatpak run com.notesnook.Notesnook",
         "tooltip": true,
         "tooltip-format": "Open Notes"
+    },
+   "custom/vpn": {
+        "exec": "$HOME/.config/sway/scripts/vpn-status.sh",
+        "return-type": "json",
+        "interval": 5,
+        "format": "{}",
+        "on-click": "$HOME/.config/sway/scripts/vpn-toggle.sh"
     },
     "custom/power": {
         "format" : "⏻ ",
