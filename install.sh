@@ -270,22 +270,33 @@ cp -a "$SCRIPT_DIR/config/." "$CONFIG_DIR/" || die "Failed to copy configs"
 # ==========================================
 
 SWAY_SCRIPTS="$CONFIG_DIR/scripts"
+WAYBAR_SCRIPTS="$CONFIG_DIR/waybar/scripts"
 
+# Sway scripts
 if [[ -d "$SWAY_SCRIPTS" ]]; then
+    msg "Setting Sway script permissions..."
 
-    msg "Setting executable permissions for Sway scripts..."
-
-    find "$SWAY_SCRIPTS" -maxdepth 1 -type f \
+    find "$SWAY_SCRIPTS" -type f \
         \( -name "*.sh" -o -name "power" -o -name "screen-off" -o -name "control-center" \) \
         -exec chmod +x {} + ||
         die "Could not set Sway script permissions."
 
-    msg "All Sway scripts are executable."
-
+    msg "Sway scripts are executable."
 else
-
     warn "Sway scripts directory not found: $SWAY_SCRIPTS"
+fi
 
+# Waybar scripts
+if [[ -d "$WAYBAR_SCRIPTS" ]]; then
+    msg "Setting Waybar script permissions..."
+
+    find "$WAYBAR_SCRIPTS" -type f \
+        -exec chmod +x {} + ||
+        die "Could not set Waybar script permissions."
+
+    msg "All Waybar scripts are executable."
+else
+    warn "Waybar scripts directory not found: $WAYBAR_SCRIPTS"
 fi
 
 if [[ -e "$HOME/.config/foot" && ! -L "$HOME/.config/foot" ]]; then
