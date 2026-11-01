@@ -145,6 +145,15 @@ window#waybar {
 #network.disconnected {
     color: @red;
 }
+/* VPN Connected */
+#custom-vpn.connected {
+    color: @sapphire;
+}
+
+/* VPN Disconnected */
+#custom-vpn.disconnected {
+    color: @red;
+}
 
 #pulseaudio {
     color: @text;
