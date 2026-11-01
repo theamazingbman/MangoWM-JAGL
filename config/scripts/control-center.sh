@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sway Control Center — nested Fuzzel menus for Fedora + Sway.
+# Sway Control Center — Fedora + Sway
 
 set -u
 
@@ -22,26 +22,31 @@ if [[ ! -f "$FUZZEL_CONFIG" ]]; then
     exit 1
 fi
 
-# Usage: menu "Prompt: " "Choice 1" "Choice 2" ...
+# Fuzzel menu helper
 menu() {
     local prompt="$1"
     shift
+
     printf '%s\n' "$@" |
         fuzzel --dmenu --prompt="$prompt" --config="$FUZZEL_CONFIG"
 }
 
+# Launch application if installed
 launch_if_installed() {
     local app="$1"
     shift
+
     if command -v "$app" >/dev/null 2>&1; then
         "$@" >/dev/null 2>&1 &
     else
-        notify "$app is not installed. Install it to use this option."
+        notify "$app is not installed."
     fi
 }
 
+# Open terminal-based utilities
 open_terminal_tui() {
     local command="$1"
+
     if command -v foot >/dev/null 2>&1; then
         foot "$command" &
     elif command -v kitty >/dev/null 2>&1; then
@@ -51,15 +56,19 @@ open_terminal_tui() {
     elif command -v gnome-terminal >/dev/null 2>&1; then
         gnome-terminal -- "$command" &
     else
-        notify "No supported terminal found (foot, kitty, alacritty or gnome-terminal)."
+        notify "No supported terminal found."
     fi
 }
 
+# ==========================================
+# Appearance Settings
+# ==========================================
+
 settings_menu() {
     local choice
-    choice="$(menu 'Settings: ' \
-        '󰒓  System Settings' \
-        '󰏘  Appearance' \
+
+    choice="$(menu 'Appearance Settings: ' \
+        '󰏘  Appearance Settings' \
         '󰍹  Display Settings' \
         '󰕾  Audio Settings' \
         '󰖩  Network Settings' \
@@ -67,26 +76,15 @@ settings_menu() {
         '󰌾  Back')" || return 0
 
     case "$choice" in
-        *"System Settings") launch_if_installed gnome-control-center gnome-control-center ;;
-        *"Appearance")
-            if command -v nwg-look >/dev/null 2>&1; then
-                nwg-look >/dev/null 2>&1 &
-            elif command -v lxappearance >/dev/null 2>&1; then
-                lxappearance >/dev/null 2>&1 &
-            else
-                notify "Install nwg-look or lxappearance for GTK appearance settings."
-            fi
+        *"Appearance Settings")
+            launch_if_installed nwg-look nwg-look
             ;;
         *"Display Settings")
-            if command -v wdisplays >/dev/null 2>&1; then
-                wdisplays >/dev/null 2>&1 &
-            elif command -v gnome-control-center >/dev/null 2>&1; then
-                gnome-control-center display >/dev/null 2>&1 &
-            else
-                notify "Install wdisplays for Wayland display configuration."
-            fi
+            launch_if_installed nwg-displays nwg-displays
             ;;
-        *"Audio Settings") launch_if_installed pavucontrol pavucontrol ;;
+        *"Audio Settings")
+            launch_if_installed pavucontrol pavucontrol
+            ;;
         *"Network Settings")
             if command -v nm-connection-editor >/dev/null 2>&1; then
                 nm-connection-editor >/dev/null 2>&1 &
@@ -94,35 +92,24 @@ settings_menu() {
                 open_terminal_tui nmtui
             fi
             ;;
-        *"Bluetooth Settings") launch_if_installed blueman-manager blueman-manager ;;
-        *) return 0 ;;
-    esac
-}
-
-display_menu() {
-    local choice
-    choice="$(menu 'Displays: ' \
-        '󰍹  Configure Displays' \
-        '󰌢  Back')" || return 0
-
-    case "$choice" in
-        *"Configure Displays")
-            if command -v wdisplays >/dev/null 2>&1; then
-                wdisplays >/dev/null 2>&1 &
-            elif command -v gnome-control-center >/dev/null 2>&1; then
-                gnome-control-center display >/dev/null 2>&1 &
-            else
-                notify "No display settings app found. Install wdisplays."
-            fi
+        *"Bluetooth Settings")
+            launch_if_installed blueman-manager blueman-manager
             ;;
-        *) return 0 ;;
+        *)
+            return 0
+            ;;
     esac
 }
+
+# ==========================================
+# Brightness
+# ==========================================
 
 brightness_menu() {
     local choice
+
     if ! command -v brightnessctl >/dev/null 2>&1; then
-        notify "brightnessctl is not installed. Install it with: sudo dnf install brightnessctl"
+        notify "Install brightnessctl to control brightness."
         return 0
     fi
 
@@ -137,19 +124,40 @@ brightness_menu() {
         '󰌢  Back')" || return 0
 
     case "$choice" in
-        *"Increase 5%") brightnessctl set 5%+ >/dev/null 2>&1 ;;
-        *"Decrease 5%") brightnessctl set 5%- >/dev/null 2>&1 ;;
-        *"Set 100%") brightnessctl set 100% >/dev/null 2>&1 ;;
-        *"Set 75%") brightnessctl set 75% >/dev/null 2>&1 ;;
-        *"Set 50%") brightnessctl set 50% >/dev/null 2>&1 ;;
-        *"Set 25%") brightnessctl set 25% >/dev/null 2>&1 ;;
-        *"Set 10%") brightnessctl set 10% >/dev/null 2>&1 ;;
-        *) return 0 ;;
+        *"Increase 5%")
+            brightnessctl set 5%+ >/dev/null 2>&1
+            ;;
+        *"Decrease 5%")
+            brightnessctl set 5%- >/dev/null 2>&1
+            ;;
+        *"Set 100%")
+            brightnessctl set 100% >/dev/null 2>&1
+            ;;
+        *"Set 75%")
+            brightnessctl set 75% >/dev/null 2>&1
+            ;;
+        *"Set 50%")
+            brightnessctl set 50% >/dev/null 2>&1
+            ;;
+        *"Set 25%")
+            brightnessctl set 25% >/dev/null 2>&1
+            ;;
+        *"Set 10%")
+            brightnessctl set 10% >/dev/null 2>&1
+            ;;
+        *)
+            return 0
+            ;;
     esac
 }
 
+# ==========================================
+# Audio
+# ==========================================
+
 audio_menu() {
     local choice
+
     choice="$(menu 'Audio: ' \
         '󰕾  Volume Up 5%' \
         '󰖀  Volume Down 5%' \
@@ -159,21 +167,42 @@ audio_menu() {
 
     case "$choice" in
         *"Volume Up 5%")
-            if command -v wpctl >/dev/null 2>&1; then wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; else notify "wpctl is not installed."; fi
+            if command -v wpctl >/dev/null 2>&1; then
+                wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+            else
+                notify "wpctl is not installed."
+            fi
             ;;
         *"Volume Down 5%")
-            if command -v wpctl >/dev/null 2>&1; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; else notify "wpctl is not installed."; fi
+            if command -v wpctl >/dev/null 2>&1; then
+                wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+            else
+                notify "wpctl is not installed."
+            fi
             ;;
         *"Toggle Mute")
-            if command -v wpctl >/dev/null 2>&1; then wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; else notify "wpctl is not installed."; fi
+            if command -v wpctl >/dev/null 2>&1; then
+                wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+            else
+                notify "wpctl is not installed."
+            fi
             ;;
-        *"Audio Mixer") launch_if_installed pavucontrol pavucontrol ;;
-        *) return 0 ;;
+        *"Audio Mixer")
+            launch_if_installed pavucontrol pavucontrol
+            ;;
+        *)
+            return 0
+            ;;
     esac
 }
 
+# ==========================================
+# Network
+# ==========================================
+
 network_menu() {
     local choice
+
     choice="$(menu 'Network: ' \
         '󰖩  Network Connections' \
         '󰖪  Wi-Fi On' \
@@ -190,24 +219,39 @@ network_menu() {
             fi
             ;;
         *"Wi-Fi On")
-            if command -v nmcli >/dev/null 2>&1; then nmcli radio wifi on; else notify "nmcli is not installed."; fi
+            if command -v nmcli >/dev/null 2>&1; then
+                nmcli radio wifi on
+            else
+                notify "nmcli is not installed."
+            fi
             ;;
         *"Wi-Fi Off")
-            if command -v nmcli >/dev/null 2>&1; then nmcli radio wifi off; else notify "nmcli is not installed."; fi
+            if command -v nmcli >/dev/null 2>&1; then
+                nmcli radio wifi off
+            else
+                notify "nmcli is not installed."
+            fi
             ;;
         *"VPN Connect / Disconnect")
             if [[ -x "$SCRIPTS/vpn-toggle.sh" ]]; then
                 "$SCRIPTS/vpn-toggle.sh" &
             else
-                notify "VPN toggle script not found: $SCRIPTS/vpn-toggle.sh"
+                notify "VPN toggle script not found."
             fi
             ;;
-        *) return 0 ;;
+        *)
+            return 0
+            ;;
     esac
 }
 
+# ==========================================
+# Bluetooth
+# ==========================================
+
 bluetooth_menu() {
     local choice
+
     choice="$(menu 'Bluetooth: ' \
         '󰂯  Bluetooth Manager' \
         '󰂲  Bluetooth On' \
@@ -215,66 +259,100 @@ bluetooth_menu() {
         '󰌢  Back')" || return 0
 
     case "$choice" in
-        *"Bluetooth Manager") launch_if_installed blueman-manager blueman-manager ;;
+        *"Bluetooth Manager")
+            launch_if_installed blueman-manager blueman-manager
+            ;;
         *"Bluetooth On")
-            if command -v bluetoothctl >/dev/null 2>&1; then bluetoothctl power on; else notify "bluetoothctl is not installed."; fi
+            if command -v bluetoothctl >/dev/null 2>&1; then
+                bluetoothctl power on
+            else
+                notify "bluetoothctl is not installed."
+            fi
             ;;
         *"Bluetooth Off")
-            if command -v bluetoothctl >/dev/null 2>&1; then bluetoothctl power off; else notify "bluetoothctl is not installed."; fi
+            if command -v bluetoothctl >/dev/null 2>&1; then
+                bluetoothctl power off
+            else
+                notify "bluetoothctl is not installed."
+            fi
             ;;
-        *) return 0 ;;
+        *)
+            return 0
+            ;;
     esac
 }
 
+# ==========================================
+# Power Options
+# ==========================================
+
 power_menu() {
     local choice
+
     choice="$(menu 'Power: ' \
-        '󰖔  Screen Off' \
         '󰍃  Logout' \
         '  Shutdown' \
         '󰜉  Reboot' \
         '󰌢  Back')" || return 0
 
     case "$choice" in
-        *"Screen Off")
-            if [[ -x "$SCRIPTS/screen-off" ]]; then
-                "$SCRIPTS/screen-off"
-            else
-                notify "Screen-off script is missing or not executable."
-            fi
+        *"Logout")
+            swaymsg exit
             ;;
-        *"Logout") swaymsg exit ;;
-        *"Shutdown") systemctl poweroff ;;
-        *"Reboot") systemctl reboot ;;
-        *) return 0 ;;
+        *"Shutdown")
+            systemctl poweroff
+            ;;
+        *"Reboot")
+            systemctl reboot
+            ;;
+        *)
+            return 0
+            ;;
     esac
 }
 
+# ==========================================
+# Main Control Center
+# ==========================================
+
 main_menu() {
     local choice
+
     choice="$(menu 'Sway Control Center: ' \
-        '󰒓  Settings' \
+        '󰏘  Appearance Settings' \
         '󰍹  Displays' \
         '󰃞  Adjust Brightness' \
         '󰕾  Audio' \
         '󰖩  Network' \
         '󰂯  Bluetooth' \
-        '󰖔  Screen Off' \
         '󰐥  Power Options' \
         '  Cancel')" || exit 0
 
     case "$choice" in
-        *"Settings") settings_menu ;;
-        *"Displays") display_menu ;;
-        *"Adjust Brightness") brightness_menu ;;
-        *"Audio") audio_menu ;;
-        *"Network") network_menu ;;
-        *"Bluetooth") bluetooth_menu ;;
-        *"Screen Off")
-            if [[ -x "$SCRIPTS/screen-off" ]]; then "$SCRIPTS/screen-off"; else notify "Screen-off script is missing or not executable."; fi
+        *"Appearance Settings")
+            launch_if_installed nwg-look nwg-look
             ;;
-        *"Power Options") power_menu ;;
-        *) exit 0 ;;
+        *"Displays")
+            launch_if_installed nwg-displays nwg-displays
+            ;;
+        *"Adjust Brightness")
+            brightness_menu
+            ;;
+        *"Audio")
+            audio_menu
+            ;;
+        *"Network")
+            network_menu
+            ;;
+        *"Bluetooth")
+            bluetooth_menu
+            ;;
+        *"Power Options")
+            power_menu
+            ;;
+        *)
+            exit 0
+            ;;
     esac
 }
 
