@@ -3,13 +3,14 @@
 @define-color base     #000000;
 @define-color surface  #202020;
 @define-color overlay  #363636;
-@define-color text     #cad3f5;
+@define-color text     #d5d8e0;
 @define-color lavender #b7bdf8;
 @define-color sapphire #7dc4e4;
 @define-color blue     #5056fa;
 @define-color green    #a6da95;
 @define-color yellow   #eed49f;
 @define-color red      #ed8796;
+@define-color grey     #6e6d6d;
 @define-color mauve    #c6a0f6;
 
 /* --- Global Configurations --- */
@@ -98,6 +99,13 @@ window#waybar {
 #workspaces button.active {
     background-color: @blue;
     color: @base;
+    min-width: 25px;
+}
+
+/* Workspace with open applications */
+#workspaces button.occupied:not(.active) {
+    background-color: @grey;
+    color: @text;
     min-width: 25px;
 }
 
