@@ -294,7 +294,7 @@
     "custom/power": {
         "format" : "⏻ ",
         "tooltip": false,
-        "on-click": "~/.config/sway/scripts/power"
+        "on-click": "~/.config/sway/scripts/control-center"
     },
     "custom/notification": {
             "tooltip": false,
