@@ -121,21 +121,27 @@ window#waybar {
     color: @lavender;
 }
 
-/* Currently focused workspace */
+/* Active workspace - light blue */
 #workspaces button.focused {
     background-color: @sapphire;
     color: @base;
     min-width: 25px;
 }
 
-/* Occupied workspace - if your module provides this class */
-#workspaces button.occupied:not(.focused) {
+/* Occupied workspace - grey */
+#workspaces button:not(.empty):not(.focused):not(.urgent) {
     background-color: @grey;
     color: @text;
     min-width: 25px;
 }
 
-/* Urgent workspace */
+/* Empty workspace - transparent */
+#workspaces button.empty:not(.focused) {
+    background-color: transparent;
+    color: @text;
+}
+
+/* Urgent workspace - red */
 #workspaces button.urgent {
     background-color: @red;
     color: @base;
