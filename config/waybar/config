@@ -124,7 +124,7 @@
     "clock": {
         // "timezone": "America/Denver",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:L%A %I:%M %p}",
+        "format": "{:L%a %b %d %I:%M %p}",
         "format-alt": "{:L%d %B W%v %Y}"
     },
     "cpu": {
